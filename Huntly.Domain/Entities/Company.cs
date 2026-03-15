@@ -24,7 +24,7 @@ namespace Huntly.Domain.Entities
                 Technologies.Add(technology);
             UpdateTimestamp();
         }
-
+        
         public void RemoveTechnology(Technology technology)
         {
             Technologies.Remove(technology);
