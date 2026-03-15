@@ -1,0 +1,25 @@
+# Build results
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.rsuser
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+
+# Environment files
+.env
+*.env
+
+# NuGet
+*.nupkg
+packages/
+
+# Logs
+*.log
