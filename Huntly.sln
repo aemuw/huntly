@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Huntly.Infrastructure", "Hu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Huntly.Api", "Huntly.Api\Huntly.Api.csproj", "{92802467-287E-46C7-BB6F-8D97D40A81C3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Huntly.Application", "Huntly.Application\Huntly.Application.csproj", "{45FB313B-B650-4BE2-894D-5F9A98B4DC2F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{92802467-287E-46C7-BB6F-8D97D40A81C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{92802467-287E-46C7-BB6F-8D97D40A81C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{92802467-287E-46C7-BB6F-8D97D40A81C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45FB313B-B650-4BE2-894D-5F9A98B4DC2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45FB313B-B650-4BE2-894D-5F9A98B4DC2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45FB313B-B650-4BE2-894D-5F9A98B4DC2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45FB313B-B650-4BE2-894D-5F9A98B4DC2F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
