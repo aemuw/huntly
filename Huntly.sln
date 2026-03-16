@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36603.0 d17.14
+VisualStudioVersion = 17.14.36603.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Huntly.Domain", "Huntly.Domain\Huntly.Domain.csproj", "{BE4774CE-5274-48CC-B9DE-A423FB7F12BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Huntly.Infrastructure", "Huntly.Infrastructure\Huntly.Infrastructure.csproj", "{2E52C528-4EAF-43D8-A35B-F7E57FEAEE7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{BE4774CE-5274-48CC-B9DE-A423FB7F12BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BE4774CE-5274-48CC-B9DE-A423FB7F12BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BE4774CE-5274-48CC-B9DE-A423FB7F12BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E52C528-4EAF-43D8-A35B-F7E57FEAEE7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E52C528-4EAF-43D8-A35B-F7E57FEAEE7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E52C528-4EAF-43D8-A35B-F7E57FEAEE7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E52C528-4EAF-43D8-A35B-F7E57FEAEE7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
