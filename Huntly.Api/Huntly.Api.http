@@ -1,0 +1,6 @@
+@Huntly.Api_HostAddress = http://localhost:5009
+
+GET {{Huntly.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

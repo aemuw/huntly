@@ -1,5 +1,6 @@
 ﻿using Huntly.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Huntly.Infrastructure.Persistence
 {
