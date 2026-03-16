@@ -2,11 +2,8 @@
 
 namespace Huntly.Domain.Interfaces
 {
-    public interface ICompanyRepository
+    public interface ICompanyRepository : IRepository<Company>
     {
-        Task<Company?> GetByIdAsync(Guid id);
         Task<IReadOnlyList<Company>> GetAllAsync();
-        Task AddAsync(Company company);
-        Task UpdateAsync(Company company);
     }
 }
