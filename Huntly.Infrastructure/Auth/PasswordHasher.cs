@@ -1,4 +1,6 @@
-﻿namespace Huntly.Infrastructure.Auth
+﻿using Huntly.Application.Interfaces;
+
+namespace Huntly.Infrastructure.Auth
 {
     public class PasswordHasher : IPasswordHasher
     {

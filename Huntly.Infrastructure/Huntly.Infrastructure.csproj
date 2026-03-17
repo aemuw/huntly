@@ -28,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Huntly.Application\Huntly.Application.csproj" />
     <ProjectReference Include="..\Huntly.Domain\Huntly.Domain.csproj" />
   </ItemGroup>
 
