@@ -4,6 +4,7 @@ using System.Text;
 using Huntly.Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using Huntly.Application.Interfaces;
 
 namespace Huntly.Infrastructure.Auth
 {

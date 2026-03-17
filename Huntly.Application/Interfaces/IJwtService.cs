@@ -1,6 +1,6 @@
 ﻿using Huntly.Domain.Entities;
 
-namespace Huntly.Infrastructure.Auth
+namespace Huntly.Application.Interfaces
 {
     public interface IJwtService
     {
