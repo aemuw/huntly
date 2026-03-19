@@ -2,9 +2,8 @@
 {
     public enum CompanySize
     {
-        Startup,
         Small,
-        Meduim,
+        Medium,
         Large,
         Unknown
     }

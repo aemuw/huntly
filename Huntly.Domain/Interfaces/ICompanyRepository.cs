@@ -5,5 +5,6 @@ namespace Huntly.Domain.Interfaces
     public interface ICompanyRepository : IRepository<Company>
     {
         Task<IReadOnlyList<Company>> GetAllAsync();
+        Task<bool> ExistsAsync(string name);
     }
 }

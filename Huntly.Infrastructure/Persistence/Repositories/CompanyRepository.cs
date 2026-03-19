@@ -12,5 +12,8 @@ namespace Huntly.Infrastructure.Persistence.Repositories
             .Include(c => c.Technologies)
             .OrderBy(c => c.Name)
             .ToListAsync();
+
+        public async Task<bool> ExistsAsync(string name)
+            => await _dbSet.AnyAsync(c => c.Name == name);
     }
 }
