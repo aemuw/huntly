@@ -57,66 +57,74 @@ The goal is to help developers track job applications, companies, interviews, an
 
 ## Architecture Diagram
 ```mermaid
-graph TD
-    Client[Client / Swagger UI]
-    Client --> API
+graph LR
+    Client([Client])
 
-    subgraph Huntly.Api
-        API[Controllers]
+    subgraph API ["Huntly.Api"]
+        direction TB
         MW[ExceptionMiddleware]
+        CT[Controllers]
     end
 
-    subgraph Huntly.Application
+    subgraph APP ["Huntly.Application"]
+        direction TB
         SVC[Services]
         DTO[DTOs]
         VAL[Validators]
     end
 
-    subgraph Huntly.Infrastructure
+    subgraph INF ["Huntly.Infrastructure"]
+        direction TB
         REPO[Repositories]
         JWT[JwtService]
         BCR[PasswordHasher]
-        DB[(PostgreSQL)]
     end
 
-    subgraph Huntly.Domain
+    subgraph DOM ["Huntly.Domain"]
+        direction TB
         ENT[Entities]
         INT[Interfaces]
         ENM[Enums]
     end
 
-    API --> MW
-    API --> SVC
+    DB[(PostgreSQL)]
+
+    Client --> MW
+    MW --> CT
+    CT --> SVC
     SVC --> REPO
     SVC --> JWT
     SVC --> BCR
     REPO --> DB
-    SVC --> ENT
-    REPO --> ENT
+    SVC -.-> ENT
+    REPO -.-> INT
 ```
 
 ## Database Schema
 ```mermaid
 erDiagram
-    Users {
+    USERS {
         uuid Id PK
         string FirstName
         string LastName
         string Email
         string PasswordHash
         datetime CreatedAt
+        datetime UpdatedAt
     }
 
-    Companies {
+    COMPANIES {
         uuid Id PK
         string Name
         string Type
         string Size
         string Website
-        datetime CreatedAt
+        string LinkedIn
+        datetime CreadeAt
+        datetime UpdatedAt
     }
 
-    JobApplications {
+    JOB_APPLICATIONS {
         uuid Id PK
         uuid UserId FK
         uuid CompanyId FK
@@ -126,33 +134,37 @@ erDiagram
         decimal SalaryFrom
         decimal SalaryTo
         datetime AppliedDate
+        datetime DueDate
         datetime CreatedAt
     }
 
-    Interviews {
+    INTERVIEWS {
         uuid Id PK
         uuid JobApplicationId FK
         string Type
         string Result
         datetime ScheduledAt
+        datetime CreatedAt
     }
 
-    Technologies {
+    TECHNOLOGIES {
         uuid Id PK
         string Name
         string Category
+        datetime CreatedAt
     }
 
-    Users ||--o{ JobApplications : "has"
-    Companies ||--o{ JobApplications : "has"
-    JobApplications ||--o{ Interviews : "has"
-    Companies }o--o{ Technologies : "uses"
-    JobApplications }o--o{ Technologies : "requires"
+    USERS ||--o{ JOB_APPLICATIONS : "owns"
+    COMPANIES ||--o{ JOB_APPLICATIONS : "has"
+    JOB_APPLICATIONS ||--o{ INTERVIEWS : "has"
+    COMPANIES }o--o{ TECHNOLOGIES : "uses"
+    JOB_APPLICATIONS }o--o{ TECHNOLOGIES : "requires"
 ```
 
 ## Request Flow
 ```mermaid
 sequenceDiagram
+    autonumber
     participant C as Client
     participant MW as Middleware
     participant CT as Controller
@@ -160,15 +172,30 @@ sequenceDiagram
     participant RP as Repository
     participant DB as PostgreSQL
 
-    C->>MW: HTTP Request + JWT
-    MW->>CT: Validated Request
-    CT->>SV: Call Service
-    SV->>RP: Query/Command
-    RP->>DB: SQL
-    DB-->>RP: Data
-    RP-->>SV: Domain Entity
-    SV-->>CT: DTO Response
-    CT-->>C: HTTP Response
+    C->>MW: HTTP Request + JWT Token
+    
+    alt Invalid Token
+        MW-->>C: 401 Unauthorized
+    else Valid Token
+        MW->>CT: Forward Request
+    end
+
+    CT->>SV: Call Business Logic
+    
+    alt Resource Not Found
+        SV-->>CT: NotFoundException
+        CT-->>C: 404 Not Found
+    else Unauthorized Access
+        SV-->>CT: UnauthorizedException
+        CT-->>C: 403 Forbidden
+    else Success
+        SV->>RP: Query / Command
+        RP->>DB: SQL Query
+        DB-->>RP: Raw Data
+        RP-->>SV: Domain Entity
+        SV-->>CT: DTO Response
+        CT-->>C: 200 / 201 / 204
+    end
 ```
 
 ## Auth
