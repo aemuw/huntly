@@ -12,7 +12,8 @@ namespace Huntly.Tests.Integration
         {
             builder.ConfigureServices(services =>
             {
-                var descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<AppDbContext>));
+                var descriptor = services.SingleOrDefault(
+                    d => d.ServiceType == typeof(DbContextOptions<AppDbContext>));
 
                 if (descriptor != null)
                     services.Remove(descriptor);
