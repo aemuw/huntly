@@ -18,7 +18,10 @@ namespace Huntly.Infrastructure.Persistence.Repositories
         {
             var entity = await _dbSet.FindAsync(id);
             if (entity != null)
+            {
                 _dbSet.Remove(entity);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

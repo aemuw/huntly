@@ -19,11 +19,15 @@ namespace Huntly.Infrastructure.Persistence.Repositories
             => await _dbSet.FindAsync(id);
 
         public async Task AddAsync(T entity)
-            => await _dbSet.AddAsync(entity);
+        {
+            await _dbSet.AddAsync(entity);
+            await _context.SaveChangesAsync();
+        }
 
         public Task UpdateAsync(T entity)
         {
             _dbSet.Update(entity);
+            _context.SaveChangesAsync();
             return Task.CompletedTask;
         }
     }
