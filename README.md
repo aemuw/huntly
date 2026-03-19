@@ -55,6 +55,122 @@ The goal is to help developers track job applications, companies, interviews, an
 - Rich Domain Model
 - Dependency Inversion Principle
 
+## Architecture Diagram
+```mermaid
+graph TD
+    Client[Client / Swagger UI]
+    Client --> API
+
+    subgraph Huntly.Api
+        API[Controllers]
+        MW[ExceptionMiddleware]
+    end
+
+    subgraph Huntly.Application
+        SVC[Services]
+        DTO[DTOs]
+        VAL[Validators]
+    end
+
+    subgraph Huntly.Infrastructure
+        REPO[Repositories]
+        JWT[JwtService]
+        BCR[PasswordHasher]
+        DB[(PostgreSQL)]
+    end
+
+    subgraph Huntly.Domain
+        ENT[Entities]
+        INT[Interfaces]
+        ENM[Enums]
+    end
+
+    API --> MW
+    API --> SVC
+    SVC --> REPO
+    SVC --> JWT
+    SVC --> BCR
+    REPO --> DB
+    SVC --> ENT
+    REPO --> ENT
+```
+
+## Database Schema
+```mermaid
+erDiagram
+    Users {
+        uuid Id PK
+        string FirstName
+        string LastName
+        string Email
+        string PasswordHash
+        datetime CreatedAt
+    }
+
+    Companies {
+        uuid Id PK
+        string Name
+        string Type
+        string Size
+        string Website
+        datetime CreatedAt
+    }
+
+    JobApplications {
+        uuid Id PK
+        uuid UserId FK
+        uuid CompanyId FK
+        string Title
+        string Status
+        string Priority
+        decimal SalaryFrom
+        decimal SalaryTo
+        datetime AppliedDate
+        datetime CreatedAt
+    }
+
+    Interviews {
+        uuid Id PK
+        uuid JobApplicationId FK
+        string Type
+        string Result
+        datetime ScheduledAt
+    }
+
+    Technologies {
+        uuid Id PK
+        string Name
+        string Category
+    }
+
+    Users ||--o{ JobApplications : "has"
+    Companies ||--o{ JobApplications : "has"
+    JobApplications ||--o{ Interviews : "has"
+    Companies }o--o{ Technologies : "uses"
+    JobApplications }o--o{ Technologies : "requires"
+```
+
+## Request Flow
+```mermaid
+sequenceDiagram
+    participant C as Client
+    participant MW as Middleware
+    participant CT as Controller
+    participant SV as Service
+    participant RP as Repository
+    participant DB as PostgreSQL
+
+    C->>MW: HTTP Request + JWT
+    MW->>CT: Validated Request
+    CT->>SV: Call Service
+    SV->>RP: Query/Command
+    RP->>DB: SQL
+    DB-->>RP: Data
+    RP-->>SV: Domain Entity
+    SV-->>CT: DTO Response
+    CT-->>C: HTTP Response
+```
+
 ## Auth
 - JWT Bearer
 - BCrypt.Net
