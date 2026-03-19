@@ -36,7 +36,7 @@ namespace Huntly.Application.Services
             return MapToResponse(job);
         }
 
-        public async Task<JobApplicationResponse?> CreateAsync(Guid userId, CreateJobApplicationRequest request)
+        public async Task<JobApplicationResponse> CreateAsync(Guid userId, CreateJobApplicationRequest request)
         {
             var company = await _companyRepository.GetByIdAsync(request.CompanyId);
 

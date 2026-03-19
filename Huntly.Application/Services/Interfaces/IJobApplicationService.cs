@@ -6,7 +6,7 @@ namespace Huntly.Application.Services.Interfaces
     {
         Task<IReadOnlyList<JobApplicationResponse>> GetByUserIdAsync(Guid userId);
         Task<JobApplicationResponse?> GetByIdAsync(Guid id, Guid userId);
-        Task<JobApplicationResponse?> CreateAsync(Guid userId, CreateJobApplicationRequest request);
+        Task<JobApplicationResponse> CreateAsync(Guid userId, CreateJobApplicationRequest request);
         Task UpdateAsync(Guid id, Guid userId, UpdateJobApplicationRequest request);
         Task ChangeStatusAsync(Guid id, Guid userId, ChangeStatusRequest request);
         Task DeleteAsync(Guid id, Guid userId);
