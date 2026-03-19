@@ -3,7 +3,7 @@
     public enum CompanyType
     {
         Product,
-        Outsourse,
+        Outsource,
         Outstuff,
         Startup,
         Mixed,

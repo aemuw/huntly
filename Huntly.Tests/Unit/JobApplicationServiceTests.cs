@@ -28,7 +28,7 @@ namespace Huntly.Tests.Unit
         [Fact]
         public async Task CreateAsync_ValidRequest_ReturnsResponse()
         {
-            var company = new Company("GlobalLogic", CompanyType.Outsourse, CompanySize.Large);
+            var company = new Company("GlobalLogic", CompanyType.Outsource, CompanySize.Large);
             var request = new CreateJobApplicationRequest
             {
                 Title = "Junior C# Developer",
