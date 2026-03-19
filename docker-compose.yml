@@ -11,5 +11,19 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  huntly-api:
+    build: .
+    container_name: huntly-api
+    environment:
+      - ConnectionStrings__Default=Host=postgres;Port=5432;Database=huntly;Username=huntly;Password=huntly123
+      - Jwt__Key=huntly-super-secret-key-32chars!!
+      - Jwt__Issuer=huntly-api
+      - Jwt__Audience=huntly-client
+      - Jwt__ExpiresInMinutes=60
+    ports:
+      - "5000:8080"
+    depends_on:
+      - postgres
+
 volumes:
   postgres_data:
