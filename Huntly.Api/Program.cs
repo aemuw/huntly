@@ -56,6 +56,7 @@ namespace Huntly.Api
                 {
                     options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
                 });
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(options =>
             {
@@ -99,6 +100,10 @@ namespace Huntly.Api
             app.UseAuthorization();
             app.MapControllers();
             app.Run();
+
         }
     }
 }
+
+public partial class Program { }
+
