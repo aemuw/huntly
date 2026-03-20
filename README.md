@@ -37,6 +37,13 @@ The goal is to help developers track job applications, companies, interviews, an
 - JWT Bearer token authentication
 - BCrypt password hashing
 
+## Analytics
+- Application status distribution chart
+- Priority breakdown chart
+- Salary expectations by status
+- Job search funnel (Applied → Interview → Offer → Accepted)
+- Conversion rate statistics
+
 ---
 
 ## Web UI
@@ -373,12 +380,12 @@ Through this project I practiced:
 - [x] FluentValidation
 - [x] Unit + Integration tests
 - [x] Web UI (HTML/CSS/JavaScript)
+- [x] Analytics and charts
 - [ ] Pagination
 - [ ] Serilog logging
 - [ ] GitHub Actions CI/CD
 - [ ] Interview tracking endpoints
 - [ ] Skills checklist per job application
-- [ ] Analytics and charts
 - [ ] Technology tracking per company
 
 ---
