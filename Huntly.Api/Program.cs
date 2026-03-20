@@ -51,6 +51,17 @@ namespace Huntly.Api
                 });
 
             builder.Services.AddAuthorization();
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                          .AllowAnyMethod()
+                          .AllowAnyHeader();
+                });
+            });
+
             builder.Services.AddControllers()
                 .AddJsonOptions(options =>
                 {
@@ -92,6 +103,10 @@ namespace Huntly.Api
             app.UseSwaggerUI();
 
             app.UseHttpsRedirection();
+
+            app.UseCors("AllowAll");
+
+
             app.UseMiddleware<ExceptionMiddleware>();
             app.UseAuthentication();
             app.UseAuthorization();

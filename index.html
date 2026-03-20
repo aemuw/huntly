@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huntly — Дашборд</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <h2>Huntly</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <a class="nav-item active" href="index.html">Заявки</a>
+                <a class="nav-item" href="companies.html">Компанії</a>
+            </nav>
+            <div class="sidebar-user">
+                <p>Увійшли як</p>
+                <strong id="user-name">...</strong>
+                <br><br>
+                <button class="btn-secondary" onclick="logout()" style="width:100%">
+                    Вийти
+                </button>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="page-header">
+                <h1>Мої заявки</h1>
+                <button class="btn-primary" style="width:auto;padding:10px 20px"
+                        onclick="openModal()">
+                    + Додати заявку
+                </button>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Всього</div>
+                    <div class="stat-value" id="stat-total">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Активних</div>
+                    <div class="stat-value" id="stat-active">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Інтерв'ю</div>
+                    <div class="stat-value" id="stat-interviews">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Офери</div>
+                    <div class="stat-value" id="stat-offers">0</div>
+                </div>
+            </div>
+
+            <div class="filter-bar">
+                <select id="filter-status" onchange="filterApplications()">
+                    <option value="">Всі статуси</option>
+                    <option value="Watchlist">Watchlist</option>
+                    <option value="Preparing">Готуюсь</option>
+                    <option value="Applied">Подав</option>
+                    <option value="PhoneScreen">Phone Screen</option>
+                    <option value="Technical">Технічне</option>
+                    <option value="Final">Фінал</option>
+                    <option value="Offer">Офер</option>
+                    <option value="Accepted">Прийнятий</option>
+                    <option value="Rejected">Відмова</option>
+                    <option value="Ghosted">Ghosted</option>
+                    <option value="Withdrawn">Відмовився</option>
+                </select>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Позиція</th>
+                            <th>Компанія</th>
+                            <th>Статус</th>
+                            <th>Пріоритет</th>
+                            <th>Зарплата</th>
+                            <th>Дата подачі</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="applications-table">
+                        <tr>
+                            <td colspan="7">
+                                <div class="empty-state">
+                                    <p>Завантаження...</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal">
+            <h3>Нова заявка</h3>
+            <div id="modal-error" class="error-message hidden"></div>
+
+            <div class="form-group">
+                <label>Позиція</label>
+                <input type="text" id="job-title" placeholder="Junior C# Developer">
+            </div>
+            <div class="form-group">
+                <label>Компанія</label>
+                <select id="job-company"></select>
+            </div>
+            <div class="form-group">
+                <label>Пріоритет</label>
+                <select id="job-priority">
+                    <option value="0">Низький</option>
+                    <option value="1" selected>Середній</option>
+                    <option value="2">Високий</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Зарплата від ($)</label>
+                <input type="number" id="job-salary-from" placeholder="800">
+            </div>
+            <div class="form-group">
+                <label>Зарплата до ($)</label>
+                <input type="number" id="job-salary-to" placeholder="1200">
+            </div>
+            <div class="form-group">
+                <label>Посилання на вакансію</label>
+                <input type="url" id="job-url" placeholder="https://...">
+            </div>
+            <div class="form-group">
+                <label>Нотатки</label>
+                <textarea id="job-notes" rows="3"
+                          placeholder="Додаткова інформація..."></textarea>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal()">Скасувати</button>
+                <button class="btn-primary" style="width:auto;padding:10px 24px"
+                        onclick="createApplication()">
+                    Додати
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
