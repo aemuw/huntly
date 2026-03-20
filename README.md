@@ -17,22 +17,28 @@ The goal is to help developers track job applications, companies, interviews, an
 
 ### Login
 ![Login](screenshots/login.png)
+*Сторінка входу з темною темою*
 
 ### Register
 ![Register](screenshots/register.png)
+*Реєстрація нового акаунту*
 
 ### Companies
 ![Companies](screenshots/companies.png)
+*Дашборд із заявками, статистикою та фільтрами*
 
 ### Job Application
 ![Job Application](screenshots/job-application.png)
+*Управління компаніями*
 
 ### Analytics
 ![Analytics](screenshots/analytics-f.png)
 ![Analytics](screenshots/analytics-s.png)
+*Аналітика — графіки статусів, пріоритетів, зарплат та воронка*
 
 ### Swagger
 ![Swagger](screenshots/swagger.png)
+*REST API документація*
 
 ---
 
