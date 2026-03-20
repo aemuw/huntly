@@ -23,6 +23,73 @@ function requireAuth() {
     return true;
 }
 
+// ===== TOAST =====
+function showToast(message, type = 'success') {
+    let container = document.getElementById('toast-container');
+    if (!container) {
+        container = document.createElement('div');
+        container.id = 'toast-container';
+        container.className = 'toast-container';
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    const icons = { success: '✅', error: '❌', info: 'ℹ️' };
+    toast.className = `toast toast-${type}`;
+    toast.innerHTML = `<span>${icons[type]}</span> ${message}`;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.style.animation = 'toastOut 0.3s ease forwards';
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
+}
+
+function showConfirm(message, onConfirm) {
+    let overlay = document.getElementById('confirm-overlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'confirm-overlay';
+        overlay.className = 'confirm-overlay';
+        overlay.innerHTML = `
+            <div class="confirm-modal">
+                <span class="confirm-icon">🗑️</span>
+                <h4>Підтвердження</h4>
+                <p id="confirm-message"></p>
+                <div class="confirm-buttons">
+                    <button class="btn-secondary" id="confirm-cancel">Скасувати</button>
+                    <button class="btn-danger" id="confirm-ok" 
+                        style="padding:8px 20px;font-size:0.88rem">
+                        Видалити
+                    </button>
+                </div>
+            </div>`;
+        document.body.appendChild(overlay);
+    }
+
+    document.getElementById('confirm-message').textContent = message;
+    overlay.classList.add('active');
+
+    document.getElementById('confirm-cancel').onclick = () => {
+        overlay.classList.remove('active');
+    };
+
+    document.getElementById('confirm-ok').onclick = () => {
+        overlay.classList.remove('active');
+        onConfirm();
+    };
+}
+
+function setLoading(btn, loading, text) {
+    if (loading) {
+        btn.innerHTML = `<span class="spinner"></span>${text}`;
+        btn.disabled = true;
+    } else {
+        btn.textContent = text;
+        btn.disabled = false;
+    }
+}
+
 async function apiRequest(endpoint, method = 'GET', body = null) {
     const options = {
         method,
@@ -197,10 +264,11 @@ async function changeStatus(id, newStatus) {
 }
 
 async function deleteApplication(id) {
-    if (!confirm('Видалити цю заявку?'))
-        return;
-    await apiRequest(`/api/jobapplications/${id}`, 'DELETE');
-    await loadApplications();
+    showConfirm('Видалити цю заявку?', async () => {
+        await apiRequest(`/api/jobapplications/${id}`, 'DELETE');
+        showToast('Заявку видалено');
+        await loadApplications();
+    });
 }
 
 function openModal() {
@@ -265,6 +333,7 @@ async function createApplication() {
     }
 
     closeModal();
+    showToast('Заявку додано!');
     await loadApplications();
 }
 
@@ -368,14 +437,16 @@ async function createCompany() {
     }
 
     closeModal();
+    showToast('Компанію додано!');
     await loadCompanies();
 }
 
 async function deleteCompany(id) {
-    if (!confirm('Видалити цю компанію?')) 
-        return;
-    await apiRequest(`/api/companies/${id}`, 'DELETE');
-    await loadCompanies();
+    showConfirm('Видалити цю компанію?', async () => {
+        await apiRequest(`/api/companies/${id}`, 'DELETE');
+        showToast('Компанію видалено');
+        await loadCompanies();
+    });
 }
 
 if (document.getElementById('applications-table')) {
