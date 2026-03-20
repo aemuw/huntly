@@ -1,5 +1,13 @@
 # Huntly
 
+![.NET](https://img.shields.io/badge/.NET-8.0-512BD4?logo=dotnet)
+![ASP.NET Core](https://img.shields.io/badge/ASP.NET_Core-8.0-512BD4?logo=dotnet)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-ready-2496ED?logo=docker&logoColor=white)
+![JWT](https://img.shields.io/badge/JWT-auth-000000?logo=jsonwebtokens)
+![Tests](https://img.shields.io/badge/Tests-32%20passing-4caf82?logo=xunit)
+![License](https://img.shields.io/badge/License-MIT-yellow)
+
 **Huntly** is a job application tracking REST API built with **C# and .NET 8**.
 
 The project demonstrates modern backend development practices including:
