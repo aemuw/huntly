@@ -13,9 +13,26 @@ The goal is to help developers track job applications, companies, interviews, an
 
 ---
 
-# Screenshot
+# Screenshots
 
-![Huntly_Swagger](screenshots/swagger.png)
+### Login
+![Login](screenshots/login.png)
+
+### Register
+![Register](screenshots/register.png)
+
+### Companies
+![Companies](screenshots/companies.png)
+
+### Job Application
+![Job Application](screenshots/job-application.png)
+
+### Analytics
+![Analytics](screenshots/analytics-f.png)
+![Analytics](screenshots/analytics-s.png)
+
+### Swagger
+![Swagger](screenshots/swagger.png)
 
 ---
 
