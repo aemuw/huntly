@@ -1,11 +1,102 @@
 ﻿<!DOCTYPE html>
-
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="uk">
 <head>
-    <meta charset="utf-8" />
-    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huntly — Реєстрація</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="auth-page">
+    <div class="auth-container">
+        <div class="auth-logo">
+            <h1>Huntly</h1>
+            <p>Відстежуй свій пошук роботи</p>
+        </div>
 
+        <div class="auth-card">
+            <h2>Створити акаунт</h2>
+
+            <div id="error-message" class="error-message hidden"></div>
+
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="firstName">Ім'я</label>
+                    <input type="text" id="firstName" placeholder="Артем" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="lastName">Прізвище</label>
+                    <input type="text" id="lastName" placeholder="Бойко" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="you@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn-primary" id="register-btn">
+                    Зареєструватись
+                </button>
+            </form>
+
+            <p class="auth-link">
+                Вже є акаунт?
+                <a href="login.html">Увійти</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:5000';
+
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const firstName = document.getElementById('firstName').value;
+            const lastName  = document.getElementById('lastName').value;
+            const email     = document.getElementById('email').value;
+            const password  = document.getElementById('password').value;
+            const btn       = document.getElementById('register-btn');
+            const error     = document.getElementById('error-message');
+
+            btn.textContent = 'Реєструємось...';
+            btn.disabled    = true;
+            error.classList.add('hidden');
+
+            try {
+                const response = await fetch(`${API_URL}/api/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ firstName, lastName, email, password })
+                });
+
+                if (!response.ok) {
+                    const data = await response.json();
+                    throw new Error(data.message || 'Помилка реєстрації');
+                }
+
+                const data = await response.json();
+                localStorage.setItem('token', data.token);
+                localStorage.setItem('user', JSON.stringify({
+                    email: data.email,
+                    firstName: data.firstName
+                }));
+
+                window.location.href = 'index.html';
+
+            } 
+            catch (err) {
+                error.textContent = err.message;
+                error.classList.remove('hidden');
+                btn.textContent = 'Зареєструватись';
+                btn.disabled    = false;
+            }
+        });
+    </script>
 </body>
 </html>
