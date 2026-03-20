@@ -39,6 +39,16 @@ The goal is to help developers track job applications, companies, interviews, an
 
 ---
 
+## Web UI
+- Single-page application built with HTML/CSS/JavaScript
+- Login and registration forms
+- Dashboard with application statistics
+- Job applications table with inline status change
+- Companies management
+- Dark theme minimal design
+
+---
+
 # Tech Stack
 
 ## Language
@@ -362,11 +372,14 @@ Through this project I practiced:
 - [x] Docker + Docker Compose
 - [x] FluentValidation
 - [x] Unit + Integration tests
-- [ ] Web UI (HTML/CSS/JavaScript)
+- [x] Web UI (HTML/CSS/JavaScript)
+- [ ] Pagination
+- [ ] Serilog logging
+- [ ] GitHub Actions CI/CD
 - [ ] Interview tracking endpoints
 - [ ] Skills checklist per job application
-- [ ] Analytics endpoints (conversion rate, salary statistics)
-- [ ] Technology tracking per company and application
+- [ ] Analytics and charts
+- [ ] Technology tracking per company
 
 ---
 
