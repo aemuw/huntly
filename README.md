@@ -31,12 +31,12 @@ The goal is to help developers track job applications, companies, interviews, an
 ![Register](screenshots/register.png)
 *Реєстрація нового акаунту*
 
-### Companies
-![Companies](screenshots/companies.png)
+### Job Application 
+![Job Application](screenshots/job-applications.png)
 *Дашборд із заявками, статистикою та фільтрами*
 
-### Job Application
-![Job Application](screenshots/job-applications.png)
+### Companies
+![Companies](screenshots/companies.png)
 *Управління компаніями*
 
 ### Analytics
