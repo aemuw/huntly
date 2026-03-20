@@ -8,5 +8,6 @@ namespace Huntly.Application.Services.Interfaces
         Task<CompanyResponse?> GetByIdAsync(Guid id);
         Task<CompanyResponse> CreateAsync(CreateCompanyRequest request);
         Task UpdateAsync(Guid id, UpdateCompanyRequest request);
+        Task DeleteAsync(Guid id);
     }
 }

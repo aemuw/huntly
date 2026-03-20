@@ -139,7 +139,7 @@ function renderTable(apps) {
         tbody.innerHTML = `
             <tr><td colspan="7">
                 <div class="empty-state">
-                    <p>Заявок ще немає. Додай першу! 🚀</p>
+                    <p>Заявок ще немає. Додай першу!</p>
                 </div>
             </td></tr>`;
         return;
@@ -266,6 +266,116 @@ async function createApplication() {
 
     closeModal();
     await loadApplications();
+}
+
+const COMPANY_TYPE_LABELS = {
+    'Product':   'Продукт',
+    'Outsource': 'Аутсорс',
+    'Outstuff':  'Аутстаф',
+    'Startup':   'Стартап',
+    'Mixed':     'Змішаний',
+    'Unknown':   'Невідомо'
+};
+
+const COMPANY_SIZE_LABELS = {
+    'Startup': 'до 50',
+    'Small':   '50–200',
+    'Medium':  '200–1000',
+    'Large':   '1000+',
+    'Unknown': 'Невідомо'
+};
+
+async function loadCompanies() {
+    if (!requireAuth()) 
+        return;
+
+    const user = getUser();
+    if (user) {
+        const el = document.getElementById('user-name');
+        if (el) el.textContent = user.firstName;
+    }
+
+    const response = await apiRequest('/api/companies');
+    if (!response) 
+        return;
+
+    const companies = await response.json();
+    renderCompanies(companies);
+}
+
+function renderCompanies(companies) {
+    const tbody = document.getElementById('companies-table');
+    if (!tbody)
+        return;
+
+    if (companies.length === 0) {
+        tbody.innerHTML = `
+            <tr><td colspan="6">
+                <div class="empty-state">
+                    <p>Компаній ще немає. Додай першу!</p>
+                </div>
+            </td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = companies.map(c => `
+        <tr>
+            <td><strong>${c.name}</strong></td>
+            <td>${COMPANY_TYPE_LABELS[c.type] || c.type}</td>
+            <td>${COMPANY_SIZE_LABELS[c.size] || c.size}</td>
+            <td>${c.website
+                ? `<a href="${c.website}" target="_blank" style="color:var(--accent)">Сайт ↗</a>`
+                : '—'}</td>
+            <td>${c.linkedIn
+                ? `<a href="${c.linkedIn}" target="_blank" style="color:var(--accent)">LinkedIn ↗</a>`
+                : '—'}</td>
+            <td>
+                <button class="btn-danger" onclick="deleteCompany('${c.id}')">
+                    Видалити
+                </button>
+            </td>
+        </tr>
+    `).join('');
+}
+
+async function createCompany() {
+    const name     = document.getElementById('company-name').value.trim();
+    const type     = parseInt(document.getElementById('company-type').value);
+    const size     = parseInt(document.getElementById('company-size').value);
+    const website  = document.getElementById('company-website').value.trim();
+    const linkedIn = document.getElementById('company-linkedin').value.trim();
+    const notes    = document.getElementById('company-notes').value.trim();
+    const errorEl  = document.getElementById('modal-error');
+
+    if (!name) {
+        errorEl.textContent = 'Введіть назву компанії';
+        errorEl.classList.remove('hidden');
+        return;
+    }
+
+    const response = await apiRequest('/api/companies', 'POST', {
+        name, type, size,
+        website:  website  || null,
+        linkedIn: linkedIn || null,
+        notes:    notes    || null
+    });
+
+    if (!response || !response.ok) {
+        const data = await response.json();
+        errorEl.textContent = data.message || 'Помилка при створенні компанії';
+        errorEl.classList.remove('hidden');
+        return;
+    }
+
+    closeModal();
+    await loadCompanies();
+}
+
+async function deleteCompany(id) {
+    if (!confirm('Видалити цю компанію?')) 
+        return;
+    await apiRequest(`/api/companies/${id}`, 'DELETE');
+    await loadCompanies();
 }
 
 if (document.getElementById('applications-table')) {

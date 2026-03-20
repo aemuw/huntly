@@ -78,4 +78,13 @@ public class CompanyService : ICompanyService
                 .Select(t => t.Name)
                 .ToList()
         };
+
+    public async Task DeleteAsync(Guid id)
+    {
+        var company = await _companyRepository.GetByIdAsync(id);
+        if (company is null)
+            throw new NotFoundException("Компанію не знайдено");
+
+        await _companyRepository.DeleteAsync(id);
+    }
 }

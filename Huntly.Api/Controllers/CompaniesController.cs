@@ -54,5 +54,18 @@ namespace Huntly.Api.Controllers
             await _companyService.UpdateAsync(id, request);
             return NoContent();
         }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            var company = await _companyService.GetByIdAsync(id);
+            if (company is null)
+                return NotFound();
+
+            await _companyService.DeleteAsync(id);
+            return NoContent();
+        }
     }
 }

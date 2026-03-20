@@ -15,5 +15,15 @@ namespace Huntly.Infrastructure.Persistence.Repositories
 
         public async Task<bool> ExistsAsync(string name)
             => await _dbSet.AnyAsync(c => c.Name == name);
+
+        public async Task DeleteAsync(Guid id)
+        {
+            var entity = await _dbSet.FindAsync(id);
+            if (entity != null)
+            {
+                _dbSet.Remove(entity);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

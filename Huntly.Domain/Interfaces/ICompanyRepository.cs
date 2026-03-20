@@ -6,5 +6,6 @@ namespace Huntly.Domain.Interfaces
     {
         Task<IReadOnlyList<Company>> GetAllAsync();
         Task<bool> ExistsAsync(string name);
+        Task DeleteAsync(Guid id);
     }
 }
