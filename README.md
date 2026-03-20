@@ -28,7 +28,7 @@ The goal is to help developers track job applications, companies, interviews, an
 *Дашборд із заявками, статистикою та фільтрами*
 
 ### Job Application
-![Job Application](screenshots/job-application.png)
+![Job Application](screenshots/job-applications.png)
 *Управління компаніями*
 
 ### Analytics
