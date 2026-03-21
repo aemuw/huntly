@@ -1,4 +1,5 @@
-﻿using Huntly.Application.DTOs.JobApplication;
+﻿using Huntly.Application.DTOs;
+using Huntly.Application.DTOs.JobApplication;
 using Huntly.Application.Exceptions;
 using Huntly.Application.Services.Interfaces;
 using Huntly.Domain.Entities;
@@ -17,10 +18,19 @@ namespace Huntly.Application.Services
             _companyRepository = companyRepository;
         }
 
-        public async Task<IReadOnlyList<JobApplicationResponse>> GetByUserIdAsync(Guid userId)
+        public async Task<PagedResponse<JobApplicationResponse>> GetPagedByUserIdAsync(
+            Guid userId, int page, int pageSize)
         {
-            var jobs = await _jobRepository.GetByUserIdAsync(userId);
-            return jobs.Select(MapToResponse).ToList();
+            var (items, totalCount) = await _jobRepository
+                .GetPagedByUserIdAsync(userId, page, pageSize);
+
+            return new PagedResponse<JobApplicationResponse>
+            {
+                Items = items.Select(MapToResponse).ToList(),
+                TotalCount = totalCount,
+                Page = page,
+                PageSize = pageSize
+            };
         }
 
         public async Task<JobApplicationResponse?> GetByIdAsync(Guid id, Guid userId)

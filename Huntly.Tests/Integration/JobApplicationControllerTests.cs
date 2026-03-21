@@ -5,6 +5,7 @@ using Huntly.Application.DTOs.Auth;
 using Huntly.Application.DTOs.Company;
 using Huntly.Application.DTOs.JobApplication;
 using Huntly.Domain.Enums;
+using Huntly.Application.DTOs;
 
 namespace Huntly.Tests.Integration
 {
@@ -99,10 +100,10 @@ namespace Huntly.Tests.Integration
                 Converters = { new System.Text.Json.Serialization.JsonStringEnumConverter() }
             };
             var content = await response.Content.ReadAsStringAsync();
-            var result = System.Text.Json.JsonSerializer.Deserialize<List<JobApplicationResponse>>(content, options);
+            var result = System.Text.Json.JsonSerializer.Deserialize<PagedResponse<JobApplicationResponse>>(content, options);
 
             Assert.NotNull(result);
-            Assert.NotEmpty(result);
+            Assert.NotEmpty(result.Items);
         }
 
         [Fact] 

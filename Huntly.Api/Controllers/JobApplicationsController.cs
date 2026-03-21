@@ -1,6 +1,7 @@
-﻿using Huntly.Application.DTOs.JobApplication;
-using Huntly.Application.Services.Interfaces;
+﻿using Huntly.Application.DTOs;
+using Huntly.Application.DTOs.JobApplication;
 using Huntly.Application.Exceptions;
+using Huntly.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -20,10 +21,10 @@ namespace Huntly.Api.Controllers
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(IEnumerable<JobApplicationResponse>), StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<JobApplicationResponse>>> GetAll()
+        [ProducesResponseType(typeof(PagedResponse<JobApplicationResponse>), StatusCodes.Status200OK)]
+        public async Task<ActionResult<PagedResponse<JobApplicationResponse>>> GetAll([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
-            var result = await _jobService.GetByUserIdAsync(GetUserId());
+            var result = await _jobService.GetPagedByUserIdAsync(GetUserId(), page, pageSize);
             return Ok(result);
         }
 
