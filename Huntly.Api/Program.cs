@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Serilog;
 
 namespace Huntly.Api
 {
@@ -17,7 +18,24 @@ namespace Huntly.Api
     {
         public static void Main(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Console()
+                .CreateBootstrapLogger();
+
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Host.UseSerilog((context, services, configuration) =>
+            {
+                configuration
+                    .ReadFrom.Configuration(context.Configuration)
+                    .ReadFrom.Services(services)
+                    .Enrich.FromLogContext()
+                    .WriteTo.Console(outputTemplate: "[{Timestamp:HH:mm::ss} {Level:u3}] {Message:lj}{NewLine}{Exception}")
+                    .WriteTo.File(
+                        path: "logs/huntly.log",
+                        rollingInterval: RollingInterval.Day,
+                        outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss} {Level:u3} {Message:u3} {Message:lj} {NewLine} {Exception}]");
+            });
 
             builder.Services.AddDbContext<AppDbContext>(options =>
                 options.UseNpgsql(
@@ -98,6 +116,8 @@ namespace Huntly.Api
             });
 
             var app = builder.Build();
+
+            app.UseSerilogRequestLogging();
 
             app.UseSwagger();
             app.UseSwaggerUI();
