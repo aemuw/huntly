@@ -11,7 +11,7 @@ jobs:
         runs-on: ubuntu-latest
 
         steps:
-          - name: Chechkout code
+          - name: Checkout code
             uses: actions/checkout@v4
             
           - name: Setup .NET
@@ -23,9 +23,9 @@ jobs:
             run: dotnet restore
 
           - name: Build
-            run: dotnet biuld --no-restore --configuration Release
+            run: dotnet build --no-restore --configuration Release
 
-          - name: Tes
+          - name: Test
             run: dotnet test --no-build --configuration Release --verbosity normal
 
     docker-build: 
