@@ -307,6 +307,36 @@ Swagger UI: `http://localhost:5000/swagger`
 
 ---
 
+## Running without Docker
+
+**Prerequisites:** PostgreSQL installed locally, .NET 8 SDK
+
+1. Create database:
+```sql
+CREATE DATABASE huntly;
+CREATE USER huntly WITH PASSWORD 'huntly123';
+GRANT ALL PRIVILEGES ON DATABASE huntly TO huntly;
+```
+
+2. Update connection string in `Huntly.Api/appsettings.json`:
+```json
+"ConnectionStrings": {
+    "Default": "Host=localhost;Port=5432;Database=huntly;Username=huntly;Password=huntly123"
+}
+```
+
+3. Apply migrations:
+```bash
+dotnet ef database update --project Huntly.Infrastructure --startup-project Huntly.Api
+```
+
+4. Run:
+```bash
+dotnet run --project Huntly.Api
+```
+
+---
+
 # API Overview
 
 ### Auth
@@ -399,6 +429,15 @@ Through this project I practiced:
 - Writing **unit tests** with xUnit and Moq
 - Writing **integration tests** with WebApplicationFactory
 - Applying **SOLID principles** and **DDD elements**
+- Implementing **Repository pattern** (Generic + Specific)
+- Designing **Rich Domain Model** with business logic in entities
+- Implementing **pagination** for large datasets
+- Structured logging with **Serilog** (console + file sinks)
+- Setting up **CI/CD pipeline** with GitHub Actions
+- Building a **web UI** with vanilla HTML/CSS/JavaScript
+- Implementing **FluentValidation** for request validation
+- Working with **many-to-many relationships** in EF Core
+- Applying **Tell Don't Ask** and **Persistence Ignorance** principles
 
 ---
 
@@ -412,9 +451,9 @@ Through this project I practiced:
 - [x] Unit + Integration tests
 - [x] Web UI (HTML/CSS/JavaScript)
 - [x] Analytics and charts
-- [ ] Pagination
-- [ ] Serilog logging
-- [ ] GitHub Actions CI/CD
+- [x] Pagination
+- [x] Serilog logging
+- [x] GitHub Actions CI/CD
 - [ ] Interview tracking endpoints
 - [ ] Skills checklist per job application
 - [ ] Technology tracking per company
